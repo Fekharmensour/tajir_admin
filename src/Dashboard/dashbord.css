@@ -1,0 +1,164 @@
+:root{
+    --dark-color : #001C30;
+    --second-color :#176B87 ;
+    --therd-color :#FB923C ;
+    --light-color :#FFF7EB ;
+    --five-color:#FFBB5C ;
+}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  font-family: "Poppins", sans-serif !important;
+}
+@font-face {
+  font-family: "tajir";
+  src: url("./../assets/Fonts/Apercu\ Regular.otf") format("truetype");
+}
+body {
+  background-color: rgba(255, 247, 235, 1) !important;
+}
+.name_logo{
+    font-family: "tajir"!important;
+    color: var(--dark-color)!important;
+    font-size: 30px;
+}
+.draw_header{
+    cursor: pointer !important;
+}
+.sidebar{
+    background-color: var(--second-color) !important;
+}
+.title{
+    color: var(--light-color);
+    /* font-size: 25px; */
+}
+
+.items .item,.items .item .icon{
+    color: var(--light-color) !important;
+}
+.items .item{
+    position: relative;
+}
+
+.items .item.active{
+    background-color: #d17a33;
+}
+.navbar{
+    font-size: 23px;
+}
+.navbar .icons .searsh{
+    position: relative;
+}
+/* this for topbar */
+.navbar .icons .searsh input{
+    padding: 5px 20px;
+    background-color: transparent;
+    border:1px solid var(--therd-color) ;
+    border-radius: 35px;
+    top: 0;
+    right: 20px;
+    width: 0px;
+    opacity: 0;
+    font-size: 17px;
+    color: var(--therd-color);
+    transition: 0.5s ease;
+    outline: none;
+}
+.navbar .icons .searsh input:focus{
+    border:2px solid var(--therd-color);
+}
+.navbar .icons .searsh .icon{
+    position: absolute;
+    top: 60%;
+    transform: translateY(-60%);
+    right: 20px;
+    font-size: 23px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+}
+.navbar .icons .searsh input.active{
+    width: 250px;
+    opacity: 1;
+}
+.navbar .icons .notification {
+    font-size: 23px;
+    position: relative;
+}
+.navbar .icons .notification span {
+    position: absolute;
+    font-size: 8px;
+    text-align: center;
+    color: var(--light-color);
+    height: 12px;
+    width: 12px;
+    background-color: var(--therd-color);
+    border-radius: 50%;
+    top: 5px;
+    right: 15px;
+}
+.navbar .icons .notification::after{
+    display: none !important;
+}
+.navbar .icons .user .image{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: transparent;
+    margin-right: 2px;
+    border: 2px solid var(--therd-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.navbar .icons .user .name{
+    margin-right: 2px;
+}
+.navbar .icons .user .name::after{
+    display: none !important;
+}
+
+/* this for static page  */
+.static .icon{
+    color: #FB923C;
+}
+
+.static .active{
+    background-color: #FB923C !important;
+    transition: 0.4s ease ;
+}
+.static .active .icon{
+    color: #FB923C;
+}
+body{
+    background: #eeeeee45 !important;
+}
+
+
+.paginate{
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.paginate .text{
+    margin: 0 20px;
+}
+ .btn_paginate{
+    color: var(--dark-color) !important  ;
+    border: 2px solid var(--dark-color)!important ;
+    background-color: transparent !important;
+    border-radius: 10px;
+    transition: 0.9s;
+}
+.btn_paginate:hover{
+    color: var(--light-color)!important ;
+    border-color:var(--dark-color) !important ;
+    background-color: var(--dark-color)!important ;
+}
+.btn_paginate.desable{
+    pointer-events: none!important;
+    cursor: default;
+    opacity: 0.4!important;
+}
+
