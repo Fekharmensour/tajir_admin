@@ -176,6 +176,7 @@ const SellerDisable = async () => {
     if (!manageSeller) {
       handleAllSellectFalse() ;
       setManageSeller(true);
+      console.log(true);
     }
   }
 
