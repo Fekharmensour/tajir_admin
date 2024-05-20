@@ -104,6 +104,7 @@ const CouponForm = (props) => {
                 value={formData.brand_id}
                 onChange={handleChange}
                 aria-label="Select Brand"
+                required
               >
                 <option value="">Select a brand</option>
                 {brands.map((e) => (
@@ -120,6 +121,7 @@ const CouponForm = (props) => {
                 name="coupon"
                 value={formData.coupon}
                 onChange={handleChange}
+                required
               />
             </Form.Group>
             <Form.Group controlId="formPercentage" className="mb-3">
@@ -129,6 +131,7 @@ const CouponForm = (props) => {
                 name="percentage"
                 value={formData.percentage}
                 onChange={handleChange}
+                required
               />
             </Form.Group>
             <Form.Group controlId="formDateE" className="mb-3">
@@ -138,6 +141,7 @@ const CouponForm = (props) => {
                 name="dateE"
                 value={formData.dateE}
                 onChange={handleChange}
+                required
               />
             </Form.Group>
             <div className="btns d-flex justify-content-end">

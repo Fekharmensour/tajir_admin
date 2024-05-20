@@ -28,10 +28,15 @@ export const AuthProvider_Dashbord = ({children}) => {
       };
 
     const handelTest = async () => {
+        if(!Cookies.get('token')){
+            SetLoading(false);
+            return false ;
+        }
         try {
             const res = await axios.get('http://127.0.0.1:8000/api/admin/test' 
             , config);
             setAdmin(res.data);
+            return res.data;
         }catch{
             console.log('error');
         }
@@ -45,6 +50,10 @@ export const AuthProvider_Dashbord = ({children}) => {
             console.log(Admin); 
             SetLoading(false)
             navigate('')
+        }else{
+            if (!handelTest()) {
+                SetLoading(false)
+            }
         }
     },[Admin])
 

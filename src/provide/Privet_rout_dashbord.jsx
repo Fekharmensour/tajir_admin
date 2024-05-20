@@ -8,7 +8,7 @@ const Privet_dashbord = () => {
     const { user_admin , loading} = useContext(AuthContext_Dashbord);
   return (
     user_admin? <Outlet/> : 
-    loading? <Loader/> : <Navigate to="/login" />
+    loading? <Loader/> : <Navigate to="/sign" />
   )
 }
 

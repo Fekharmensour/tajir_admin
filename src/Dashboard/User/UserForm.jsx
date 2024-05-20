@@ -124,7 +124,7 @@ const UserForm = (props) => {
               type="text"
               placeholder="Enter username"
               name="username"
-              value={formData.username}
+              defaultValue={formData.username}
               onChange={handleChange}
             />
           </Form.Group>
@@ -134,7 +134,7 @@ const UserForm = (props) => {
               type="text"
               placeholder="Enter your address"
               name="address"
-              value={formData.address}
+              defaultValue={formData.address}
               onChange={handleChange}
             />
           </Form.Group>
@@ -144,7 +144,7 @@ const UserForm = (props) => {
               type="number"
               placeholder="Enter your Number"
               name="phone"
-              value={formData.phone}
+              defaultValue={formData.phone}
               onChange={handleChange}
             />
           </Form.Group>
@@ -154,7 +154,7 @@ const UserForm = (props) => {
               type="date"
               placeholder="Enter your birthdayr"
               name="birthday"
-              value={formData.birthday}
+              defaultValue={formData.birthday}
               onChange={handleChange}
             />
           </Form.Group>

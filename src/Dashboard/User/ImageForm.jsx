@@ -87,7 +87,7 @@ const ImageForm = (props) => {
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formFile" className="mb-3">
               <Form.Label>Image update</Form.Label>
-              <Form.Control type="file" name="image" onChange={handleChange} />
+              <Form.Control type="file" name="image" onChange={handleChange} required/>
             </Form.Group>
             <div className="btns d-flex justify-content-end">
               <Button variant="primary" type="submit" className="btn-del">

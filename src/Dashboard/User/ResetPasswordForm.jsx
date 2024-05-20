@@ -84,7 +84,7 @@ const ResetPasswordForm = (props) => {
               <Form.Control 
                 type="password" 
                 name="old_password" 
-                value={formData.old_password} 
+                defaultValue={formData.old_password} 
                 onChange={handleChange} 
                 required 
               />
@@ -94,7 +94,7 @@ const ResetPasswordForm = (props) => {
               <Form.Control 
                 type="password" 
                 name="new_password" 
-                value={formData.new_password} 
+                defaultValue={formData.new_password} 
                 onChange={handleChange} 
                 required 
               />
@@ -104,7 +104,7 @@ const ResetPasswordForm = (props) => {
               <Form.Control 
                 type="password" 
                 name="new_password_confirmation" 
-                value={formData.new_password_confirmation} 
+                defaultValue={formData.new_password_confirmation} 
                 onChange={handleChange} 
                 required 
               />

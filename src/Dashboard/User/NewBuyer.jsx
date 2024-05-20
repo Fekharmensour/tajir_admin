@@ -88,8 +88,9 @@ const NewBuyer = (props) => {
             type="text"
             placeholder="Enter username"
             name="username"
-            value={formData.username}
+            defaultValue={formData.username}
             onChange={handleChange}
+            required
           />
         </Form.Group>
 
@@ -99,8 +100,9 @@ const NewBuyer = (props) => {
             type="email"
             placeholder="Enter email"
             name="email"
-            value={formData.email}
+            defaultValue={formData.email}
             onChange={handleChange}
+            required
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formEmail">
@@ -109,8 +111,9 @@ const NewBuyer = (props) => {
             type="text"
             placeholder="Enter your address"
             name="address"
-            value={formData.address}
+            defaultValue={formData.address}
             onChange={handleChange}
+            required
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formEmail">
@@ -119,7 +122,7 @@ const NewBuyer = (props) => {
             type="number"
             placeholder="Enter your Number"
             name="phone"
-            value={formData.phone}
+            defaultValue={formData.phone}
             onChange={handleChange}
           />
         </Form.Group>
@@ -129,7 +132,7 @@ const NewBuyer = (props) => {
             type="date"
             placeholder="Enter your birthdayr"
             name="birthday"
-            value={formData.birthday}
+            defaultValue={formData.birthday}
             onChange={handleChange}
           />
         </Form.Group>
