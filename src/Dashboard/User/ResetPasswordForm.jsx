@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect , CSSProperties} from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -6,7 +6,12 @@ import "./user.css";
 import axios from "axios";
 import { Toaster, toast } from 'alert';
 import Cookies from 'js-cookie';
-
+import MoonLoader from "react-spinners/MoonLoader";
+const override = {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "red",
+};
 const config= {
   headers: {
       'Authorization': `Bearer ${Cookies.get('token')}`
@@ -14,6 +19,8 @@ const config= {
 };
 
 const ResetPasswordForm = (props) => {
+  const [loading, setLoading] = useState(false);
+  const [color, setColor] = useState("#FB923C");
   const [formData, setFormData] = useState({
     old_password: "",
     new_password: "",
@@ -61,6 +68,16 @@ const ResetPasswordForm = (props) => {
           <Modal.Title>Reset Password</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+        <div className="sweet-loading">
+        <MoonLoader
+          color={color}
+          loading={loading}
+          cssOverride={override}
+          size={50}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      </div>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="oldPassword" className="mb-3">
               <Form.Label>Old Password</Form.Label>

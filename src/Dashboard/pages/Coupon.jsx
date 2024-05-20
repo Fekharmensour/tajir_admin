@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , CSSProperties} from "react";
 import TopBar from "../TopBar";
 import { FaStar } from "react-icons/fa";
 import { TfiLayoutListThumbAlt } from "react-icons/tfi";
@@ -26,6 +26,12 @@ import Table from 'react-bootstrap/Table';
 import { FcShop } from "react-icons/fc";
 import CouponForm from "../Content/CouponForm";
 import { SiTrueup } from "react-icons/si";
+import MoonLoader from "react-spinners/MoonLoader";
+const override = {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "red",
+};
 
 const config = {
   headers: {
@@ -34,6 +40,8 @@ const config = {
 };
 
 const Coupon = () => {
+  const [loading, setLoading] = useState(false);
+  const [color, setColor] = useState("#FB923C");
   const [coupon , setCoupon] = useState(true);
   const [adds , setAdds] = useState(false);
   const [effect , seteffect] = useState(false);
@@ -48,11 +56,11 @@ const Coupon = () => {
 
   const fetchAddsData = async () => {
     try {
+      setLoading(true)
       const response = await axios.get( 'http://127.0.0.1:8000/api/admin/ads', config);
       if (response.status === 200) {
         SetAddsData(response.data.ads); 
-        console.log(response.data);
-        console.log(addsData);
+        setLoading(false)
       } else {
         console.error(`Request failed with status ${response.status}`);
       }
@@ -62,9 +70,11 @@ const Coupon = () => {
   };
   const fetchCouponData = async () => {
     try {
+      setLoading(true)
       const response = await axios.get( 'http://127.0.0.1:8000/api/admin/coupon', config);
       if (response.status === 200) {
         SetCouponData(response.data.coupons); 
+        setLoading(false)
       } else {
         console.error(`Request failed with status ${response.status}`);
       }
@@ -119,12 +129,14 @@ const Coupon = () => {
     });
   };
   const handlDeleteAds = async (id) => {
+    setLoading(true)
     const response = await axios.delete(
       `http://127.0.0.1:8000/api/admin/ads/delete/${id}` , config
     );
     if (response.status === 200) {
       toast.success(response.data.message);
       updateeffect()
+      setLoading(false)
     } else {
       alert(response.data.message);
     }
@@ -148,12 +160,14 @@ const Coupon = () => {
     });
   };
   const handlDeleteCoupon = async (id) => {
+    setLoading(true)
     const response = await axios.delete(
       `http://127.0.0.1:8000/api/admin/coupon/delete/${id}` , config
     );
     if (response.status === 200) {
       toast.success(response.data.message);
       updateeffect()
+      setLoading(false)
     } else {
       alert(response.data.message);
     }
@@ -271,6 +285,16 @@ const Coupon = () => {
         <TopBar />
         <Container>
         <Toaster width={100}  position='top-center'/>
+        <div className="sweet-loading">
+        <MoonLoader
+          color={color}
+          loading={loading}
+          cssOverride={override}
+          size={50}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      </div>
       <div
         className="collapse"
         id="navbarToggleExternalContent"

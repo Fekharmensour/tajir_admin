@@ -1,5 +1,5 @@
 // UserForm.js
-import React, { useState , useEffect } from "react";
+import React, { useState, useEffect , CSSProperties} from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Swal from "sweetalert2";
@@ -8,7 +8,12 @@ import bgSeller from './../../assets/Bg_Seller.jpg';
 import axios from "axios";
 import { Toaster, toast } from 'alert';
 import Cookies from 'js-cookie';
-
+import MoonLoader from "react-spinners/MoonLoader";
+const override = {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "red",
+};
 const config= {
   headers: {
       'Authorization': `Bearer ${Cookies.get('token')}`
@@ -17,7 +22,8 @@ const config= {
 
 const Seller_view = (props) => {
   
-
+  const [loading, setLoading] = useState(false);
+  const [color, setColor] = useState("#FB923C");
     const [formData, setFormData] = useState({
         id: "",
         image:"",
@@ -128,6 +134,16 @@ const Seller_view = (props) => {
         <Modal.Title className="text-center">Seller Account</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+      <div className="sweet-loading">
+        <MoonLoader
+          color={color}
+          loading={loading}
+          cssOverride={override}
+          size={50}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      </div>
       <section className="">
     <div className="container text-center">
         <div className="row">

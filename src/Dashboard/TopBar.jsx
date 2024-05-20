@@ -19,9 +19,9 @@ const config = {
 };
 
 const TopBar = () => {
-  const [active_search , setActive_serach] = useState(false)
-  const { logout_admin} = useContext(AuthContext_Dashbord)
-  const [user , setuser] =useState({});
+  const [active_search , setActive_serach] = useState(false);
+  const {User , effect ,logout_admin } = useContext(AuthContext_Dashbord)
+  const [user , setuser] =useState(User);
   const navigate = useNavigate();
   const log_out = ()=>{ 
     Swal.fire({
@@ -56,7 +56,7 @@ const TopBar = () => {
 
   useEffect(() => {
     fetchuser()
-  },[])
+  },[effect])
 
   return (
     <div className="">

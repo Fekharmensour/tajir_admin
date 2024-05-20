@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , CSSProperties} from "react";
 import Modal from "react-bootstrap/Modal";
 import "../User/user.css";
 import Button from "react-bootstrap/Button";
@@ -7,6 +7,12 @@ import axios from "axios";
 import Form from "react-bootstrap/Form";
 import Cookies from "js-cookie";
 import { Toaster, toast } from "alert";
+import MoonLoader from "react-spinners/MoonLoader";
+const override = {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "red",
+};
 const config = {
   headers: {
     Authorization: `Bearer ${Cookies.get("token")}`,
@@ -14,6 +20,8 @@ const config = {
 };
 
 const CouponForm = (props) => {
+  const [loading, setLoading] = useState(false);
+  const [color, setColor] = useState("#FB923C");
   const [brands, setBrands] = useState([]);
   const [formData, setFormData] = useState({
     brand_id: "",
@@ -47,6 +55,7 @@ const CouponForm = (props) => {
   };
 
   const handleSubmit = async (e) => {
+    setLoading(true)
     e.preventDefault();
     console.log(formData);
     const response = await axios.post(
@@ -56,6 +65,7 @@ const CouponForm = (props) => {
     );
     if (response.status === 201) {
       toast.success(response.data.message);
+      setLoading(false)
       props.effect();
       props.handleClose();
     } else {
@@ -76,6 +86,16 @@ const CouponForm = (props) => {
           <Modal.Title>Create new Coupon</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+        <div className="sweet-loading">
+        <MoonLoader
+          color={color}
+          loading={loading}
+          cssOverride={override}
+          size={50}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      </div>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formBrand" className="mb-3">
               <Form.Label>Brand</Form.Label>

@@ -1,5 +1,5 @@
 
-import React, { useState , useEffect} from 'react';
+import React, { useState, useEffect , CSSProperties} from "react";
 import TopBar from '../TopBar';
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
@@ -19,7 +19,12 @@ import { Toaster, toast } from 'alert';
 import { TbExchange } from "react-icons/tb";
 import Cookies from 'js-cookie';
 import NewBuyer from '../User/NewBuyer';
-
+import MoonLoader from "react-spinners/MoonLoader";
+const override = {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "red",
+};
 const config = {
   headers: {
       'Authorization': `Bearer ${Cookies.get('token')}`
@@ -43,6 +48,8 @@ const User =  () => {
   const [ effect , seteffect ]= useState(false)
   const [manageSeller , setManageSeller ]= useState(false)
   const[ShowNewBuyer , SetShowNewBuyer] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [color, setColor] = useState("#FB923C");
   
   const toastStyles = {
     background: '#007bff', // Blue background color
@@ -52,6 +59,7 @@ const User =  () => {
 
 const SellerDisable = async () => {
       try {
+        setLoading(true)
         const response = await axios.get( "http://127.0.0.1:8000/api/disabledSellers" , {
           headers: { 'Content-Type': 'application/json' },
         });
@@ -59,6 +67,7 @@ const SellerDisable = async () => {
         if (response.status === 200) {
           console.log(response.data.sellers);
           setSellerDisabledData(response.data.sellers);
+          setLoading(false)
         } else {
           console.error(`Request failed with status ${response.status}`);
         }
@@ -69,6 +78,7 @@ const SellerDisable = async () => {
 
   const fetchData = async () => {
     try {
+      setLoading(true)
       const response = await axios.get( URL , {
         headers: { 'Content-Type': 'application/json' },
       });
@@ -76,6 +86,7 @@ const SellerDisable = async () => {
       if (response.status === 200) {
         setUsersData(response.data.users);
         setpaginate(response.data.paginate);
+        setLoading(false)
       } else {
         console.error(`Request failed with status ${response.status}`);
       }
@@ -179,6 +190,12 @@ const SellerDisable = async () => {
       console.log(true);
     }
   }
+  const handlGetbySearch = (e) =>{
+    if (e === "") {
+      setURL(`http://127.0.0.1:8000/api/users`);
+    }
+    setURL(`http://127.0.0.1:8000/api/users?search=${e}`);
+  }
 
   const handlDelete = async (id)=>{
     const response = await axios.delete(`http://127.0.0.1:8000/api/admin/users/${id}` , config)
@@ -236,6 +253,16 @@ const SellerDisable = async () => {
       <>
         <div>
         <Toaster width={100}  position='top-center'/>
+        <div className="sweet-loading">
+        <MoonLoader
+          color={color}
+          loading={loading}
+          cssOverride={override}
+          size={50}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      </div>
           <Container>
             <div className="collapse" id="navbarToggleExternalContent" data-bs-theme="dark">
               <div className="bg-white-50 p-4">
@@ -301,8 +328,11 @@ const SellerDisable = async () => {
               <InputGroup className='my-3 '>
                 {/* onChange for search */}
                 <Form.Control
-                  onChange={(e) => setSearch(e.target.value)}
-                  placeholder='Search contacts'
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                    handlGetbySearch(search);
+                  }}
+                  placeholder='Search About Users'
                   className='p-2 px-4 fs-5 rounded-4 '
                 />
               </InputGroup>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , CSSProperties} from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -8,7 +8,12 @@ import axios from "axios";
 import { setRef } from "@mui/material";
 import { Toaster, toast } from 'alert';
 import Cookies from 'js-cookie';
-
+import MoonLoader from "react-spinners/MoonLoader";
+const override = {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "red",
+};
 const config= {
   headers: {
       'Authorization': `Bearer ${Cookies.get('token')}`
@@ -16,6 +21,8 @@ const config= {
 };
 
 const ImageForm = (props) => {
+  const [loading, setLoading] = useState(false);
+  const [color, setColor] = useState("#FB923C");
     const [formData, setFormData] = useState({
         image: null,
     });
@@ -30,6 +37,7 @@ const ImageForm = (props) => {
       };
       const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true)
         const form = new FormData();
         form.append("text", formData.text);
         if (formData.image) {
@@ -48,6 +56,7 @@ const ImageForm = (props) => {
           toast.success(response.data.message);
           props.effect();
           props.handleClose();
+          setLoading(false)
         } else {
           alert(response.data.message);
         }
@@ -65,6 +74,16 @@ const ImageForm = (props) => {
           <Modal.Title>Update Photo Profile</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+        <div className="sweet-loading">
+        <MoonLoader
+          color={color}
+          loading={loading}
+          cssOverride={override}
+          size={50}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      </div>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formFile" className="mb-3">
               <Form.Label>Image update</Form.Label>

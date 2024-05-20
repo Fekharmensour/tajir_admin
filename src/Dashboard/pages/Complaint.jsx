@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , CSSProperties} from "react";
 import TopBar from "../TopBar";
 import { FaStar } from "react-icons/fa";
 import { TfiLayoutListThumbAlt } from "react-icons/tfi";
@@ -19,7 +19,12 @@ import { Container } from "react-bootstrap";
 import ProductForm from "../Complaint/ProductForm";
 import SellerForm from "../Complaint/SellerForm";
 import Cookies from 'js-cookie';
-
+import MoonLoader from "react-spinners/MoonLoader";
+const override = {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "red",
+};
 const config= {
   headers: {
       'Authorization': `Bearer ${Cookies.get('token')}`
@@ -54,6 +59,8 @@ function Star(rating) {
 }
 
 const Complaint = () => {
+  const [loading, setLoading] = useState(false);
+  const [color, setColor] = useState("#FB923C");
   const [menu, setmenu] = useState(false);
   const [buyer, setViewBuyer] = useState(false);
   const [seller, setViewSeller] = useState(false);
@@ -75,11 +82,11 @@ const Complaint = () => {
 
   const fetchReviewData = async () => {
     try {
+      setLoading(true)
       const response = await axios.get( 'http://127.0.0.1:8000/api/admin/complaint/reviews', config);
       if (response.status === 200) {
         SetReviewData(response.data.data); 
-        console.log(ReviewData); // empty
-        console.log(response.data);
+        setLoading(false)
       } else {
         console.error(`Request failed with status ${response.status}`);
       }
@@ -88,10 +95,13 @@ const Complaint = () => {
     }
   };
   const fetchProductData = async () => {
+
     try {
+      setLoading(true)
       const response = await axios.get( 'http://127.0.0.1:8000/api/admin/complaint/products', config);
       if (response.status === 200) {
         SetProuductData(response.data.data); 
+        setLoading(false)
       } else {
         console.error(`Request failed with status ${response.status}`);
       }
@@ -101,11 +111,11 @@ const Complaint = () => {
   };
   const fetchBuyerData = async () => {
     try {
+      setLoading(true)
       const response = await axios.get( 'http://127.0.0.1:8000/api/admin/complaint/buyers', config);
       if (response.status === 200) {
         SetBuyerData(response.data.data); 
-        console.log(ReviewData); // empty
-        console.log(response.data);
+        setLoading(false)
       } else {
         console.error(`Request failed with status ${response.status}`);
       }
@@ -115,11 +125,11 @@ const Complaint = () => {
   };
   const fetchSellerwData = async () => {
     try {
+      setLoading(true)
       const response = await axios.get( 'http://127.0.0.1:8000/api/admin/complaint/sellers', config);
       if (response.status === 200) {
         SetSellerData(response.data.data); 
-        console.log(ReviewData); // empty
-        console.log(response.data);
+        setLoading(false)
       } else {
         console.error(`Request failed with status ${response.status}`);
       }
@@ -160,12 +170,14 @@ const Complaint = () => {
     });
   };
   const handlDelete = async (id) => {
+    setLoading(true)
     const response = await axios.delete(
       `http://127.0.0.1:8000/api/admin/complaint/${id}` , config
     );
     if (response.status === 200) {
       toast.success(response.data.message);
       updateeffect()
+      setLoading(false)
     } else {
       alert(response.data.message);
     }
@@ -295,6 +307,16 @@ const Complaint = () => {
     <div>
       <TopBar />
       <Toaster width={100}  position='top-center'/>
+      <div className="sweet-loading">
+        <MoonLoader
+          color={color}
+          loading={loading}
+          cssOverride={override}
+          size={50}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      </div>
       <Container>
       <div
         className="collapse"

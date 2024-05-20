@@ -10,8 +10,43 @@ export default AuthContext_Dashbord;
 
 
 export const AuthProvider_Dashbord = ({children}) => {
-    const [Admin , setAdmin ]=useState(() => Cookies.get('token') ?  true : false);
+    const [Admin , setAdmin ]=useState(false);
+    const [user , Setuser] = useState({}) ;
+    const [effect , SetEffect] = useState(false) ;
+    const [loading , SetLoading] = useState(true) ;
+    const [token , setToken] = useState(() => Cookies.get('token') ? Cookies.get('token')  : "")
+
+    const updateEffect = () =>{
+        SetEffect(!effect)
+    }
     const navigate = useNavigate();
+
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+      };
+
+    const handelTest = async () => {
+        try {
+            const res = await axios.get('http://127.0.0.1:8000/api/admin/test' 
+            , config);
+            setAdmin(res.data);
+        }catch{
+            console.log('error');
+        }
+    }
+    useEffect(()=>{
+        handelTest();
+    })
+    useEffect(()=>{
+        if (Admin) {
+            setAdmin(Admin)
+            console.log(Admin); 
+            SetLoading(false)
+            navigate('')
+        }
+    },[Admin])
 
     const login = async (e) => {
         e.preventDefault();
@@ -27,6 +62,9 @@ export const AuthProvider_Dashbord = ({children}) => {
             if (response.status === 200) {
                 toast.success('Login successful');
                 Cookies.set('token', response.data.token);
+                Setuser(response.data.user.user);
+                Setuser({ ...user, image: null });
+                updateEffect();
                 setAdmin(true);
                 navigate('/');
 
@@ -37,11 +75,11 @@ export const AuthProvider_Dashbord = ({children}) => {
             toast.error('An error occurred while logging in');
         }
     };
-    const config= {
-        headers: {
-            'Authorization': `Bearer ${Cookies.get('token')}`
-        }
-    }; 
+    // const config= {
+    //     headers: {
+    //         'Authorization': `Bearer ${Cookies.get('token')}`
+    //     }
+    // }; 
    const logout = async ()=>{
     try {
         const response = await axios.get('http://127.0.0.1:8000/api/profile/logout' , config);
@@ -63,7 +101,11 @@ export const AuthProvider_Dashbord = ({children}) => {
     const ContextData = {
         login_admin : login ,
         user_admin : Admin ,
-        logout_admin : logout
+        logout_admin : logout ,
+        effect : effect ,
+        SetEffect : updateEffect,
+        User : user ,
+        loading : loading
       }
   
       return(

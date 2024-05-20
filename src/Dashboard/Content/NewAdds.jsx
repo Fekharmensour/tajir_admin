@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , CSSProperties} from "react";
 import Modal from "react-bootstrap/Modal";
 import "../User/user.css";
 import Button from "react-bootstrap/Button";
@@ -7,12 +7,20 @@ import axios from "axios";
 import { Toaster, toast } from "alert";
 import Form from "react-bootstrap/Form";
 import Cookies from "js-cookie";
+import MoonLoader from "react-spinners/MoonLoader";
+const override = {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "red",
+};
 const config = {
   headers: {
     Authorization: `Bearer ${Cookies.get("token")}`,
   },
 };
 const NewAdds = (props) => {
+  const [loading, setLoading] = useState(true);
+  const [color, setColor] = useState("#FB923C");
     const [formData, setFormData] = useState({
         id: "",
         image: null,

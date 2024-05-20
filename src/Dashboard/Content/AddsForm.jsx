@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , CSSProperties} from "react";
 import Modal from "react-bootstrap/Modal";
 import "../User/user.css";
 import Button from "react-bootstrap/Button";
@@ -7,12 +7,20 @@ import axios from "axios";
 import { Toaster, toast } from "alert";
 import Form from "react-bootstrap/Form";
 import Cookies from "js-cookie";
+import MoonLoader from "react-spinners/MoonLoader";
+const override = {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "red",
+};
 const config = {
   headers: {
     Authorization: `Bearer ${Cookies.get("token")}`,
   },
 };
 const AddsForm = (props) => {
+  const [loading, setLoading] = useState(false);
+  const [color, setColor] = useState("#FB923C");
   const [formData, setFormData] = useState({
     id: "",
     image: null,
@@ -37,6 +45,7 @@ const AddsForm = (props) => {
     }
   };
   const handleSubmit = async (e) => {
+    setLoading(true)
     e.preventDefault();
     const form = new FormData();
     form.append("text", formData.text);
@@ -54,6 +63,7 @@ const AddsForm = (props) => {
     );
     if (response.status === 200) {
       toast.success(response.data.message);
+      setLoading(false)
       props.effect();
       props.handleClose();
     } else {
@@ -74,6 +84,16 @@ const AddsForm = (props) => {
           <Modal.Title>Ad Data</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+        <div className="sweet-loading">
+        <MoonLoader
+          color={color}
+          loading={loading}
+          cssOverride={override}
+          size={50}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      </div>
           <div className="image d-flex justify-content-center mb-3">
             {formData.image && (
               <img
